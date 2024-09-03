@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Div Exemplo</title>
+
+    <link rel="stylesheet" href="styly/slider.css">
+    <link rel="stylesheet" href="script/script.js">
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 100px;
+            margin: 10PX;
+            gap: 20px;
+        }
+        .game-info {
+            background-color: #0f1e35;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+       
+        .game-info h2 {
+            font-size: 16px;
+            margin: 0 0 10px;
+            color: white;
+        }
+        .teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .team img {
+            width: 50px;
+            height: auto;
+        }
+        .team-name {
+            margin-top: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+        .time {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .auto-score {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        .more-info {
+            margin-top: 15px;
+            color: #0066cc;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+  
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: #0f1e35;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        .menu-item {
+            text-align: center;
+            color: white;
+            flex: 1;
+        }
+
+        .menu-item img {
+            width: 24px;
+            height: 24px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .menu-item p {
+            margin: 5px 0 0;
+            font-size: 12px;
+            color: #bfbfbf;
+            
+        }
+
+        .odds {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .odd {
+            flex: 1;
+            text-align: center;
+            background-color: #071a2d;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 5px;
+            border: 2px solid white;
+        }
+
+        .odd:first-child {
+            margin-left: 0;
+        }
+
+        .odd:last-child {
+            margin-right: 0;
+        }
+        
+            .odds .odd {
+        padding: 10px;
+        border: 1px solid #000;
+        cursor: pointer;
+    }
+
+/* Estilo para a div modal */
+.modal {
+    display: none; /* Esconde a modal por padrão */
+    position: fixed; /* Posiciona a modal fixamente na tela */
+    z-index: 999; /* Coloca a modal acima de qualquer outro elemento */
+    left: 0;
+    top: 0;
+    width: 100%; /* Faz a modal ocupar toda a largura da tela */
+    height: 100%; /* Faz a modal ocupar toda a altura da tela */
+    overflow: auto; /* Adiciona rolagem caso o conteúdo da modal seja maior que a tela */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente para a modal */
+}
+
+/* Conteúdo da modal */
+.modal-content {
+    background-color: #0f1e35;
+    margin: 15% auto; /* Centraliza a modal verticalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 200px; /* Largura da modal */
+    height: 50px;
+    border-radius: 10px;
+    background-color:  #0f1e35; /* Fundo branco para o conteúdo da modal */
+    color: aliceblue;
+}
+
+/* Botão para fechar a modal */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo da div oculta */
+.hidden-div {
+    background-color: #0f1e35;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+}
+
+/* Botão de fechar dentro da div oculta */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: red;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Alinhamento do conteúdo da div oculta */
+.teams, .odds {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.teams .team, .odds .odd {
+    text-align: center;
+    color: white;
+}
+
+
+.icons {
+            display: flex;
+            gap: 10px;
+            color: #f0f0f0;
+        }
+
+        .plus-icon{
+            color: white;
+        }
+
+        /* Estilo do Rodapé */
+.site-footer {
+    background-color: #0f1e35; /* Cor de fundo para combinar com a .game-info */
+    color: white; /* Cor do texto */
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    width: 100%; /* Ocupa 100% da largura disponível */
+    max-width: 300px; /* Limita a largura máxima para combinar com .game-info */
+    margin: 20px auto 0; /* Centraliza o rodapé e adiciona margem no topo */
+    border-radius: 10px; /* Adiciona cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombra similar à .game-info */
+}
+
+.footer-links {
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    color: #bfbfbf; /* Cor dos links */
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    color: #ffffff; /* Cor ao passar o mouse */
+}
+
+.footer-description {
+    margin-bottom: 20px;
+}
+
+.footer-description p {
+    margin: 5px 0;
+}
+
+.footer-legal p {
+    margin: 5px 0;
+    font-size: 12px;
+    color: #bfbfbf; /* Cor mais clara para o texto legal */
+}
+
+
+
+
+       
+    </style>
+</head>
+<body>
+
+    <!-- Div do formulário que será exibida -->
+<div id="formModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="userForm">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="slider">
+    <div class="slide-track">
+        <div class="slide invite-card">
+            <img src="https://via.placeholder.com/80" alt="Profile Picture">
+            <h2>🏆DAVI TIPS (ALAVANCAGEM)</h2>
+            <p>106 311 subscribers</p>
+            <p>Ganhe de 50$ a 200$ com nossas Alavancagens Diárias no Futebol!💰</p>
+            <p>✅ Clique em “Join Channel” para entrar</p>
+            <a href="#" class="join-button">JOIN CHANNEL</a>
+        </div>
+        <!-- Repita a estrutura da div abaixo conforme necessário -->
+ 
+>
+        <div class="slide invite-card">
+            <img src="img/freitas.jpg" alt="Profile Picture">
+            <h2>🏆OUTRO CANAL</h2>
+            <p>80 000 subscribers</p>
+            <p>Participe das nossas dicas diárias e aumente seus ganhos!💰</p>
+            <p>✅ Clique em “Join Channel” para entrar</p>
+            <a href="#" class="join-button">JOIN CHANNEL</a>
+        </div>
+        <div class="slide invite-card">
+            <img src="https://via.placeholder.com/80" alt="Profile Picture">
+            <h2>🏆CANAL 3</h2>
+            <p>50 000 subscribers</p>
+            <p>Dicas exclusivas e estratégias de sucesso!💰</p>
+            <p>✅ Clique em “Join Channel” para entrar</p>
+            <a href="#" class="join-button">JOIN CHANNEL</a>
+        </div>
+        <!-- Você pode repetir os slides ou adicionar mais -->
+    </div>
+</div>
+
+
+    <div id="hiddenDiv" class="hidden-div">
+        <div class="plus-icon">Palpitar🍀</div>
+
+              <div class="teams">
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Cuiabá</div>
+            </div>
+            <div class="time">18:30</div>
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Criciúma</div>
+            </div>
+        </div>
+        <div class="odds">
+            <div class="odd">Casa</div>
+            <div class="odd">Empate</div>
+            <div class="odd">Visitante</div>
+        </div>
+    </div>
+
+
+    <div id="hiddenDiv" class="hidden-div">
+        <div class="plus-icon"> Palpitar🍀</div>
+
+        <div class="teams">
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Cuiabá</div>
+            </div>
+            <div class="time">18:30</div>
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Criciúma</div>
+            </div>
+        </div>
+        <div class="odds">
+            <div class="odd">Casa</div>
+            <div class="odd">Empate</div>
+            <div class="odd">Visitante</div>
+        </div>
+    </div>
+
+
+    <div id="hiddenDiv" class="hidden-div">
+        <div class="plus-icon"> Palpitar🍀</div>
+
+        <div class="teams">
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Cuiabá</div>
+            </div>
+            <div class="time">18:30</div>
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Criciúma</div>
+            </div>
+        </div>
+        <div class="odds">
+            <div class="odd">Casa</div>
+            <div class="odd">Empate</div>
+            <div class="odd">Visitante</div>
+        </div>
+    </div>
+
+    <div id="hiddenDiv" class="hidden-div">
+        <div class="plus-icon"> Palpitar🍀</div>
+
+        <div class="teams">
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Cuiabá</div>
+            </div>
+            <div class="time">18:30</div>
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Criciúma</div>
+            </div>
+        </div>
+        <div class="odds">
+            <div class="odd">Casa</div>
+            <div class="odd">Empate</div>
+            <div class="odd">Visitante</div>
+        </div>
+    </div>
+
+
+
+    <div id="hiddenDiv" class="hidden-div">
+        <div class="plus-icon"> Palpitar🍀</div>
+        <div class="teams">
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Cuiabá</div>
+            </div>
+            <div class="time">18:30</div>
+            <div class="team">
+                <img src="img/BARCELONA.png">
+                <div class="team-name">Criciúma</div>
+            </div>
+        </div>
+        <div class="odds">
+            <div class="odd">Casa</div>
+            <div class="odd">Empate</div>
+            <div class="odd">Visitante</div>
+        </div>
+    </div>
+    
+
+    <div class="slider">
+        <div class="slide-track">
+            <div class="slide invite-card">
+                <img src="https://via.placeholder.com/80" alt="Profile Picture">
+                <h2>🏆DAVI TIPS (ALAVANCAGEM)</h2>
+                <p>106 311 subscribers</p>
+                <p>Ganhe de 50$ a 200$ com nossas Alavancagens Diárias no Futebol!💰</p>
+                <p>✅ Clique em “Join Channel” para entrar</p>
+                <a href="#" class="join-button">JOIN CHANNEL</a>
+            </div>
+
+            
+            <!-- Repita a estrutura da div abaixo conforme necessário -->
+     
+    >
+            <div class="slide invite-card">
+                <img src="img/freitas.jpg" alt="Profile Picture">
+                <h2>🏆OUTRO CANAL</h2>
+                <p>80 000 subscribers</p>
+                <p>Participe das nossas dicas diárias e aumente seus ganhos!💰</p>
+                <p>✅ Clique em “Join Channel” para entrar</p>
+                <a href="#" class="join-button">JOIN CHANNEL</a>
+            </div>
+
+            <div class="slide invite-card">
+                <img src="img/freitas.jpg" alt="Profile Picture">
+                <P> lIVE NO YOUTUBE</P>
+                <h2><img src="img/icons8-youtube-ao-vivo-48.png" alt="Profile Picture"></h2>
+                <h2>Citizen TV Kenya <span>&#10004;</span></h2>
+                 <p>@kenyacitizentv</p>
+                <a href="#" class="join-button">PARTICIPAR</a>
+            </div>
+
+
+
+            
+            <!-- Você pode repetir os slides ou adicionar mais -->
+            
+        </div>   
+       </div>
+        
+      
+        
+
+
+
+    
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+    <div class="bottom-menu">
+        <div class="menu-item active" id="homeMenu">
+            <img src="img/icons8-casa-50.png" alt="Home">
+            <p>Home</p>
+        </div>
+        <div class="menu-item active" id="grupos">
+            <img src="img/icons8-user-groups-50.png" alt="Grupos">
+            <p>Grupos</p>
+        </div>
+        <div class="menu-item active" id="Palpites">
+            <img src="img/icons8-clover-26.png" alt="Palpites">
+            <p>Palpites</p>
+        </div>
+        <div class="menu-item active" id="desenpenho">
+            <img src="img\icons8-increase-26.png" alt="desenpenho">
+            <p>Desenpenho</p>
+        </div>
+        <div class="menu-item active" id="">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" alt="">
+            <p>Iniciar Sessão</p>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="#">Termos e Condições</a>
+            <a href="#">Política de Privacidade</a>
+            <a href="#">Contactos</a>
+            <a href="#">Instagram</a>
+        </div>
+        <div class="footer-description">
+            
+        </div>
+        <div class="footer-legal">
+            <p>Gamble Responsibly. Gambling Therapy. 18+</p>
+            <p>Copyright © 2024 Martins Software  - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
+<script>
+    function toggleHiddenDiv(event) {
+    event.preventDefault(); // Impede o link de redirecionar
+    var hiddenDiv = document.getElementById("hiddenDiv");
+    if (hiddenDiv.style.display === "none") {
+        hiddenDiv.style.display = "block";
+    } else {
+        hiddenDiv.style.display = "none";
+    }
+}
+
+// Seleciona as divs clicáveis
+document.querySelectorAll('.odds .odd').forEach(function(item) {
+    item.addEventListener('click', function() {
+        // Exibe a div do formulário ao clicar em uma odd
+        document.getElementById('formModal').style.display = 'flex';
+    });
+});
+
+// Fecha o modal ao clicar no "x"
+document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('formModal').style.display = 'none';
+});
+
+// Fecha o modal ao clicar fora dele
+window.addEventListener('click', function(event) {
+    if (event.target == document.getElementById('formModal')) {
+        document.getElementById('formModal').style.display = 'none';
+    }
+});
+
+// Submissão do formulário
+document.getElementById('userForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Lógica para enviar o formulário, por exemplo, usando fetch ou Ajax.
+    alert('Formulário enviado!');
+    document.getElementById('formModal').style.display = 'none';
+});
+
+
+
+
+document.getElementById('grupos').addEventListener('click', function() {
+window.location.href = 'Grupos.html'; // Substitua 'home.html' pela URL da página de destino
+});
+
+document.getElementById('Palpites').addEventListener('click', function() {
+window.location.href = 'Palpites.html'; // Substitua 'home.html' pela URL da página de destino
+});
+
+document.getElementById('desenpenho').addEventListener('click', function() {
+window.location.href = 'desenpenho.html'; // Substitua 'home.html' pela URL da página de destino
+});
+
+
+
+</script>
+
+</body>
+</html>
